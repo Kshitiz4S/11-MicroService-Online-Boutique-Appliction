@@ -103,5 +103,24 @@ services:
     environment:
       - PORT=9555
 
+  nginx:
+    image: nginx:latest
+    container_name: nginx-reverse-proxy
+    ports:
+      - "80:80"
+    volumes:
+      - /etc/nginx/nginx.conf:/etc/nginx/nginx.conf
+    depends_on:
+      - frontend
+      - emailservice
+      - checkoutservice
+      - recommendationservice
+      - paymentservice
+      - productcatalogservice
+      - cartservice
+      - currencyservice
+      - shippingservice
+      - adservice      
+
 volumes:
   redis-data:
