@@ -70,7 +70,7 @@ services:
   loadgenerator:
     image: kshitiz182/loadgenerator:latest
     environment:
-      - FRONTEND_ADDR=frontend:80
+      - FRONTEND_ADDR=frontend:443
       - USERS=10
 
   currencyservice:
@@ -104,12 +104,12 @@ services:
       - PORT=9555
 
   nginx:
-    image: nginx:latest
+    image: kshitiz182/nginx:latest
     container_name: nginx-reverse-proxy
+    restart: unless-stopped
     ports:
       - "80:80"
-    volumes:
-      - /etc/nginx/nginx.conf:/etc/nginx/nginx.conf
+      - "443:443"
     depends_on:
       - frontend
       - emailservice
@@ -120,7 +120,7 @@ services:
       - cartservice
       - currencyservice
       - shippingservice
-      - adservice      
+      - adservice
 
 volumes:
   redis-data:
